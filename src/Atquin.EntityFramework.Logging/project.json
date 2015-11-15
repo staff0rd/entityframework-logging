@@ -1,9 +1,9 @@
 {
-  "version": "1.0.0-*",
-  "description": "EntityFramework.Extensions Class Library",
-  "authors": [ "stafford" ],
+  "version": "1.0.0-beta7",
+  "description": "ASP.NET 5 Logging provider for Entity Framework 6",
+  "authors": [ "Stafford Williams" ],
   "tags": [ "" ],
-  "projectUrl": "",
+  "projectUrl": "https://github.com/staff0rd/entityframework-logging",
   "licenseUrl": "",
     "frameworks": {
         "dnx451": { }

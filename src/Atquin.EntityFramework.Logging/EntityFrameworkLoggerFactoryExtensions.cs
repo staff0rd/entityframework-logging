@@ -2,7 +2,7 @@
 using System;
 using System.Data.Entity;
 
-namespace Logging.EntityFramework
+namespace Atquin.EntityFramework.Logging
 {
     public static class EntityFrameworkLoggerFactoryExtensions
     {

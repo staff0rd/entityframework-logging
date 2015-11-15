@@ -2,7 +2,7 @@
 using System;
 using System.Data.Entity;
 
-namespace Logging.EntityFramework
+namespace Atquin.EntityFramework.Logging
 {
     public class EntityFrameworkLoggerProvider<TDbContext, TLog> : ILoggerProvider 
         where TLog : EntityFrameworkLog, new()

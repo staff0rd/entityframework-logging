@@ -8,7 +8,7 @@ using System.Text;
 using Microsoft.AspNet.Http;
 using System.Data.Entity;
 
-namespace Logging.EntityFramework
+namespace Atquin.EntityFramework.Logging
 {
     public class EntityFrameworkLogger<TDbContext, TLog> : ILogger 
         where TLog : EntityFrameworkLog, new()

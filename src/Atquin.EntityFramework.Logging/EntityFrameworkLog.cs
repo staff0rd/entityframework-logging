@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Logging.EntityFramework
+namespace Atquin.EntityFramework.Logging
 {
     public class EntityFrameworkLog
     {
