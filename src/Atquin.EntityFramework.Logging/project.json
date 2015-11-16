@@ -6,10 +6,14 @@
   "projectUrl": "https://github.com/staff0rd/entityframework-logging",
   "licenseUrl": "",
     "frameworks": {
-        "dnx451": { }
+		"dnx451": {
+			"frameworkAssemblies": {
+				"System.ComponentModel.DataAnnotations": "4.0.0.0"
+			}
+		}
     },
 	"dependencies": {
-		"EntityFramework": "6.1.3",
+		"EntityFramework": "6.1.4-beta8",
 		"Microsoft.AspNet.Http.Abstractions": "1.0.0-beta8",
 		"Microsoft.Framework.DependencyInjection.Abstractions": "1.0.0-beta8",
 		"Microsoft.Framework.Logging.Abstractions": "1.0.0-beta8",
