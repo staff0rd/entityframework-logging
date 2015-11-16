@@ -34,7 +34,7 @@ namespace Atquin.EntityFramework.Logging
         {
             if (options != null)
             {
-                return ((category, level) => GetFilter(options.Options, category, level));
+                return ((category, level) => GetFilter(options.Value, category, level));
             }
             else
                 return ((category, level) => true);
