@@ -103,7 +103,7 @@ namespace Atquin.EntityFramework.Logging
             {
                 log.Browser = _httpContext.Request.Headers["User-Agent"];
                 log.Username = _httpContext.User.Identity.Name;
-                try { log.HostAddress = _httpContext.Connection.LocalIpAddress.ToString(); }
+                try { log.HostAddress = _httpContext.Connection.LocalIpAddress?.ToString(); }
                 catch (ObjectDisposedException) { log.HostAddress = "Disposed"; }
                 log.Url = _httpContext.Request.Path;
                 //LogProperty("Browser", request.UserAgent);
