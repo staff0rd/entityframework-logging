@@ -5,11 +5,18 @@
   "tags": [ "" ],
   "projectUrl": "https://github.com/staff0rd/entityframework-logging",
   "licenseUrl": "",
-    "frameworks": {
+	"frameworks": {
 		"dnx451": {
 			"frameworkAssemblies": {
 				"System.ComponentModel.DataAnnotations": "4.0.0.0"
 			}
 		}
-    }
+	},
+	"dependencies": {
+		"Microsoft.AspNet.Http.Abstractions": "1.0.0-rc1-final",
+		"Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final",
+		"Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+		"Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final",
+		"EntityFramework":  "6.1.3"
+	}
 }

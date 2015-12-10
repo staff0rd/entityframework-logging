@@ -1,12 +1,12 @@
-﻿using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
-using Microsoft.Framework.OptionsModel;
-using System;
+﻿using System;
 using System.Collections;
 using System.Linq;
 using System.Text;
 using Microsoft.AspNet.Http;
 using System.Data.Entity;
+using Microsoft.Extensions.OptionsModel;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Atquin.EntityFramework.Logging
 {
