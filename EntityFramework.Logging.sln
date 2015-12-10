@@ -5,9 +5,9 @@ VisualStudioVersion = 14.0.24627.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Atquin.EntityFramework.Logging", "src\Atquin.EntityFramework.Logging\Atquin.EntityFramework.Logging.xproj", "{ECC124D9-9F9A-4A64-A333-51E1B4CCAFA4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{62E1DEB6-A74C-4AD5-A68E-77FD6A8A46E5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{179A7AB2-82C4-4F16-8A4C-059ACABF575A}"
 	ProjectSection(SolutionItems) = preProject
-		src\Atquin.EntityFramework.Logging\global.json = src\Atquin.EntityFramework.Logging\global.json
+		global.json = global.json
 	EndProjectSection
 EndProject
 Global
