@@ -17,17 +17,13 @@ namespace Atquin.EntityFramework.Logging
         const int _indentation = 2;
         readonly string _name;
         readonly Func<string, LogLevel, bool> _filter;
-        readonly DbContext _db;
-        readonly HttpContext _httpContext;
+        IServiceProvider _services;
 
         public EntityFrameworkLogger(string name, Func<string, LogLevel, bool> filter, IServiceProvider serviceProvider)
         {
             _name = name;
             _filter = filter ?? GetFilter(serviceProvider.GetService<IOptions<EntityFrameworkLoggerOptions>>());
-            _db = serviceProvider.GetRequiredService<TDbContext>();
-            var accessor = serviceProvider.GetService<IHttpContextAccessor>();
-            if (accessor != null)
-                _httpContext = accessor.HttpContext;
+            _services = serviceProvider;
         }
 
         private Func<string, LogLevel, bool> GetFilter(IOptions<EntityFrameworkLoggerOptions> options)
@@ -99,24 +95,25 @@ namespace Atquin.EntityFramework.Logging
             if (exception != null)
                 log.Exception = Trim(exception.ToString(), EntityFrameworkLog.MaximumExceptionLength);
 
-            if (_httpContext != null)
-            {
-                log.Browser = _httpContext.Request.Headers["User-Agent"];
-                log.Username = _httpContext.User.Identity.Name;
-                try { log.HostAddress = _httpContext.Connection.LocalIpAddress?.ToString(); }
-                catch (ObjectDisposedException) { log.HostAddress = "Disposed"; }
-                log.Url = _httpContext.Request.Path;
-                //LogProperty("Browser", request.UserAgent);
-                //LogProperty("Username", user);
-                //LogProperty("HostAddress", request.UserHostAddress);
-                //LogProperty("Url", HttpContext.Current.Request.Url.AbsoluteUri);
-            }
+            var httpContext = _services.GetRequiredService<IHttpContextAccessor>()?.HttpContext;
 
-            _db.Set<TLog>().Add(log);
+            if (httpContext != null)
+            {
+                log.Browser = httpContext.Request.Headers["User-Agent"];
+                log.Username = httpContext.User.Identity.Name;
+                try { log.HostAddress = httpContext.Connection.LocalIpAddress?.ToString(); }
+                catch (ObjectDisposedException) { log.HostAddress = "Disposed"; }
+                log.Url = httpContext.Request.Path;
+            }
+            else
+                log.Url = "Null";
+
+            var db = _services.GetRequiredService<TDbContext>();
+            db.Set<TLog>().Add(log);
 
             try
             {
-                _db.SaveChanges();
+                db.SaveChanges();
             }
             catch (Exception e)
             {
@@ -197,74 +194,6 @@ namespace Atquin.EntityFramework.Logging
                 isFirst = false;
             }
         }
-
-        //public IDisposable BeginScopeImpl(object state)
-        //{
-        //    return _provider.BeginScopeImpl(_name, state);
-        //}
-
-        //public bool IsEnabled(LogLevel logLevel)
-        //{
-        //    return _logger.IsEnabled(ConvertLevel(logLevel));
-        //}
-
-        //public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
-        //{
-        //    var level = ConvertLevel(logLevel);
-        //    if (!_logger.IsEnabled(level))
-        //    {
-        //        return;
-        //    }
-
-        //    var logger = _logger;
-        //    string messageTemplate = null;
-
-        //    var structure = state as ILogValues;
-        //    if (structure != null)
-        //    {
-        //        foreach (var property in structure.GetValues())
-        //        {
-        //            if (property.Key == "{OriginalFormat}" && property.Value is string)
-        //            {
-        //                messageTemplate = (string)property.Value;
-        //            }
-        //            else if (property.Key.StartsWith("@"))
-        //            {
-        //                logger = logger.ForContext(property.Key.Substring(1), property.Value, destructureObjects: true);
-        //            }
-        //            else
-        //            {
-        //                logger = logger.ForContext(property.Key, property.Value);
-        //            }
-        //        }
-
-        //        var stateType = state.GetType();
-        //        var stateTypeInfo = stateType.GetTypeInfo();
-        //        // Imperfect, but at least eliminates `1 and + names
-        //        if (messageTemplate == null && !stateTypeInfo.IsGenericType && !stateTypeInfo.IsNested)
-        //        {
-        //            messageTemplate = "{" + stateType.Name + ":l}";
-        //            logger = logger.ForContext(stateType.Name, LogFormatter.Formatter(state, null));
-        //        }
-        //    }
-
-        //    if (messageTemplate == null && state != null)
-        //    {
-        //        messageTemplate = LogFormatter.Formatter(state, null);
-        //    }
-
-        //    if (string.IsNullOrEmpty(messageTemplate))
-        //    {
-        //        return;
-        //    }
-
-        //    if (eventId != 0)
-        //    {
-        //        logger = logger.ForContext("EventId", eventId, false);
-        //    }
-
-        //    logger.Write(level, exception, messageTemplate);
-        //}
 
         private class NoopDisposable : IDisposable
         {
