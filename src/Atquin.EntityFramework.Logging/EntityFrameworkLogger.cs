@@ -105,8 +105,6 @@ namespace Atquin.EntityFramework.Logging
                 catch (ObjectDisposedException) { log.HostAddress = "Disposed"; }
                 log.Url = httpContext.Request.Path;
             }
-            else
-                log.Url = "Null";
 
             var db = _services.GetRequiredService<TDbContext>();
             db.Set<TLog>().Add(log);
