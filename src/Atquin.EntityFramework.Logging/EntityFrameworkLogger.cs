@@ -111,7 +111,7 @@ namespace Atquin.EntityFramework.Logging
 
             try
             {
-                db.SaveChanges();
+                db.SaveChangesAsync();
             }
             catch (Exception e)
             {
